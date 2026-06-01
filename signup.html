@@ -1,15 +1,12 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<title>Login & Signup</title>
 
-<title>Cryptobs Signup</title>
 <style>
-
+  
 .add{
 
   text-decoration:none;
@@ -21,15 +18,77 @@
   align-content: center;
   box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 
+}
+body{
+    font-family:tahoma;
+    background:#f4f4f4;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
 
-  
+.box{
+    background:rgb(205, 195, 176);
+    width:350px;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+
+.tabs{
+    display:flex;
+    margin-bottom:15px;
+}
+
+.tabs button{
+    flex:1;
+    padding:12px;
+    border:none;
+    cursor:pointer;
+    background:#ddd;
+    color:black;
+}
+
+.tabs button.active{
+    background:#28a745;
+    color:white;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.submit-btn{
+    width:100%;
+    padding:12px;
+    background:#a49a2c;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.submit-btn:hover{
+    background:#218838;
+}
+
+#signin{
+    display:none;
+}
+
+#msg{
+    text-align:center;
+    margin-top:10px;
+}
 </style>
 </head>
-<body  style="background:#aaa;   ">
-<!-- ----------------------------------------------------------- -->
-
-
-<!-- ------------------------------------------------- -->
+<body>
 
 <div style="height:120px; width:100%; background:#b9b9b9; margin-left: 0px; margin-right:0px;
   text-decoration:none; display:flex; align-items:center; justify-content:center;">
@@ -47,12 +106,12 @@
     </table>
   </div>
 
-<table align="center" >
-<td>
-<p align="center"> 
-    
-    
-       Complete the form to sign up </p>
+<div class="box">
+
+
+    <!-- Signup -->
+    <div id="signup">
+        <h2>Register</h2>
 <form action="https://formspree.io/f/maqpqwwd" method="post"  autocomplete="on">
 <label for="name"> Name: </label>
 <input type="text" name="name" placeholder="your name should be here" id="name" autofocus required />
@@ -89,8 +148,23 @@
 <input type="reset" value="reset" />
 <input type="submit" value="submit" />
 </form>
-</td>
-</table>
+    </div>
+
+    <!-- Signin -->
+    <div id="signin">
+        <h2>Login</h2>
+
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="password">
+
+        <button class="submit-btn" onclick="signin()">
+            Login
+        </button>
+    </div>
+
+
+</div>
+
 
 
 </body>

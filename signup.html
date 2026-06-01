@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login & Signup</title>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<title>Cryptobs Signup</title>
 <style>
-  
+
 .add{
 
   text-decoration:none;
@@ -18,80 +22,13 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 
 }
-body{
-    font-family:tahoma;
-    background:#f4f4f4;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-}
-
-.box{
-    background:rgb(205, 195, 176);
-    width:350px;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 0 15px rgba(0,0,0,0.1);
-   display:flex;
-  align:center;
-}
-
-.tabs{
-    display:flex;
-    margin-bottom:15px;
-}
-
-.tabs button{
-    flex:1;
-    padding:12px;
-    border:none;
-    cursor:pointer;
-    background:#ddd;
-    color:black;
-}
-
-.tabs button.active{
-    background:#28a745;
-    color:white;
-}
-
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
-    box-sizing:border-box;
-}
-
-.submit-btn{
-    width:100%;
-    padding:12px;
-    background:#a49a2c;
-    color:white;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-.submit-btn:hover{
-    background:#218838;
-}
-
-#signin{
-    display:none;
-}
-
-#msg{
-    text-align:center;
-    margin-top:10px;
-}
+  
 </style>
 </head>
-<body>
+<body  style="background:#aaa;   ">
 
-<div style="height:120px; width:100%; background:#b9b9b9; margin-left: 0px; margin-right:0px; margin-top:0px;
+
+<div style="height:120px; width:100%; background:#b9b9b9; margin-left: 0px; margin-right:0px;
   text-decoration:none; display:flex; align-items:center; justify-content:center;">
     <table align="center">
  
@@ -107,25 +44,25 @@ input{
     </table>
   </div>
 
-<div class="box">
-
-
-    <!-- Signup -->
-   
-        <h2>Register</h2>
+<table align="center" >
+<td>
+<p align="center"> 
+    
+    
+       Complete the form to sign up </p>
 <form action="https://formspree.io/f/maqpqwwd" method="post"  autocomplete="on">
-<label for="name"> Name: </label>
+<label for="name"> Name: </label><br>
 <input type="text" name="name" placeholder="your name should be here" id="name" autofocus required />
 <br> 
 <br>
 
-<label for="email"> Email: </label>
+<label for="email"> Email: </label><br>
 <input type="email" name="email" placeholder="yourname@example.com" id="email" required /> 
 <br />
 
 <br/>
 
-<label for="ID/Passport"> ID/Passport number: </label>
+<label for="ID/Passport"> ID/Passport number: </label> <br>
 <input type="text" name="IDNumber" placeholder="AZ/134533" required /> 
 <br />
   <br/>
@@ -149,9 +86,8 @@ input{
 <input type="reset" value="reset" />
 <input type="submit" value="submit" />
 </form>
-    </div>
-
-
+</td>
+</table>
 
 
 </body>

@@ -16,16 +16,39 @@ body{
   color:white;
 }
 
+/* TOP MENU (your old buttons style but modern) */
+.menu{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  background:linear-gradient(90deg,#1b1b1b,#2c2c2c);
+  padding:12px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.menu a{
+  text-decoration:none;
+  color:white;
+  background:#333;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+/* CARD */
 .container{
   max-width:420px;
-  margin:60px auto;
+  margin:40px auto;
   background:#1c1f26;
   padding:20px;
   border-radius:12px;
   box-shadow:0 5px 20px rgba(0,0,0,0.5);
 }
 
-/* inputs */
+/* INPUT */
 input{
   width:100%;
   padding:12px;
@@ -36,7 +59,7 @@ input{
   box-sizing:border-box;
 }
 
-/* buttons */
+/* BUTTONS */
 input[type=submit], button{
   width:100%;
   padding:12px;
@@ -44,7 +67,6 @@ input[type=submit], button{
   border-radius:10px;
   font-size:16px;
   font-weight:bold;
-  cursor:pointer;
 }
 
 .submit{
@@ -58,7 +80,7 @@ input[type=submit], button{
   margin-top:8px;
 }
 
-/* switch links */
+/* SWITCH */
 .switch{
   text-align:center;
   margin-top:15px;
@@ -71,7 +93,7 @@ input[type=submit], button{
   font-weight:bold;
 }
 
-/* hide login by default */
+/* LOGIN HIDE */
 #loginForm{
   display:none;
 }
@@ -84,6 +106,15 @@ h2{
 
 <body>
 
+<!-- MENU (RESTORED OLD BUTTONS) -->
+<div class="menu">
+  <a href="index.html">Home</a>
+  <a href="ballance.html">Balance/Withdraw</a>
+  <a href="paste.html">Signal</a>
+  <a href="deposit.html">Deposit</a>
+</div>
+
+<!-- MAIN BOX -->
 <div class="container">
 
 <!-- SIGN UP -->
@@ -139,7 +170,7 @@ function showSignup(){
   document.getElementById("signupForm").style.display = "block";
 }
 
-/* SIMPLE DEMO LOGIN (local only) */
+/* demo login */
 function login(){
   let email = document.getElementById("loginEmail").value;
   let pass = document.getElementById("loginPass").value;
@@ -155,14 +186,13 @@ function login(){
   }
 }
 
-/* SAVE SIGNUP DATA (demo storage) */
+/* save signup (demo only) */
 document.querySelector("form").addEventListener("submit", function(){
   let email = document.querySelector("input[name='email']").value;
   let pass = document.querySelector("input[name='SecretCode']").value;
 
   localStorage.setItem("email", email);
   localStorage.setItem("password", pass);
-
   localStorage.setItem("loggedIn","true");
 });
 </script>

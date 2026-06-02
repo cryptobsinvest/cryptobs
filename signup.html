@@ -4,73 +4,40 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cryptobs Signup</title>
+<title>Cryptobs Auth</title>
 
 <link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-
-<meta name="theme-color" content="#0f1115">
 
 <style>
 body{
   margin:0;
-  font-family: Arial, sans-serif;
+  font-family:Arial;
   background:#0f1115;
   color:white;
 }
 
-/* TOP NAV */
-.navbar{
-  display:flex;
-  justify-content:space-around;
-  flex-wrap:wrap;
-  background:linear-gradient(90deg,#1b1b1b,#2c2c2c);
-  padding:12px;
-  position:sticky;
-  top:0;
-}
-
-.navbar a{
-  text-decoration:none;
-  color:white;
-  background:#333;
-  padding:10px 14px;
-  border-radius:10px;
-  font-size:14px;
-}
-
-/* FORM BOX */
 .container{
   max-width:420px;
-  margin:30px auto;
+  margin:60px auto;
   background:#1c1f26;
   padding:20px;
   border-radius:12px;
-  box-shadow:0 4px 15px rgba(0,0,0,0.5);
+  box-shadow:0 5px 20px rgba(0,0,0,0.5);
 }
 
-/* INPUTS */
+/* inputs */
 input{
   width:100%;
   padding:12px;
-  margin-top:8px;
-  margin-bottom:15px;
+  margin:10px 0;
   border-radius:10px;
   border:none;
-  outline:none;
   font-size:16px;
   box-sizing:border-box;
 }
 
-/* RADIO GROUP */
-.radio-group{
-  display:flex;
-  justify-content:space-between;
-  margin:10px 0 20px 0;
-}
-
-/* BUTTONS */
-button, input[type=submit], input[type=reset]{
+/* buttons */
+input[type=submit], button{
   width:100%;
   padding:12px;
   border:none;
@@ -80,69 +47,125 @@ button, input[type=submit], input[type=reset]{
   cursor:pointer;
 }
 
-input[type=submit]{
+.submit{
   background:#00c896;
   color:black;
-  margin-bottom:10px;
 }
 
-input[type=reset]{
+.reset{
   background:#444;
   color:white;
+  margin-top:8px;
+}
+
+/* switch links */
+.switch{
+  text-align:center;
+  margin-top:15px;
+  color:#aaa;
+  cursor:pointer;
+}
+
+.switch span{
+  color:#00c896;
+  font-weight:bold;
+}
+
+/* hide login by default */
+#loginForm{
+  display:none;
 }
 
 h2{
   text-align:center;
-  margin-bottom:15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<div class="navbar">
-  <a href="index.html">Home</a>
-  <a href="paste.html">Signal</a>
-  <a href="ballance.html">Balance</a>
-  <a href="deposit.html">Deposit</a>
-</div>
-
-<!-- FORM -->
 <div class="container">
 
-<h2>Signup</h2>
+<!-- SIGN UP -->
+<div id="signupForm">
+  <h2>Sign Up</h2>
 
-<p style="text-align:center; opacity:0.8;">
-Create your account to start using Cryptobs
-</p>
+  <form action="https://formspree.io/f/maqpqwwd" method="post">
 
-<form action="https://formspree.io/f/maqpqwwd" method="post">
+    <input type="text" name="name" placeholder="Name" required>
 
-<label>Name</label>
-<input type="text" name="name" placeholder="Your name" required>
+    <input type="email" name="email" placeholder="Email" required>
 
-<label>Email</label>
-<input type="email" name="email" placeholder="your@email.com" required>
+    <input type="text" name="IDNumber" placeholder="ID / Passport" required>
 
-<label>ID / Passport</label>
-<input type="text" name="IDNumber" placeholder="ID or Passport" required>
+    <input type="text" name="Gender" placeholder="Gender" required>
 
-<label>Gender</label>
-<div class="radio-group">
-  <label><input type="radio" name="Gender" value="Male" required> Male</label>
-  <label><input type="radio" name="Gender" value="Female" required> Female</label>
+    <input type="text" name="SecretCode" placeholder="Password" required>
+
+    <input type="submit" class="submit" value="Create Account">
+    <input type="reset" class="reset" value="Reset">
+
+  </form>
+
+  <div class="switch" onclick="showLogin()">
+    Already have an account? <span>Sign In</span>
+  </div>
 </div>
 
-<label>Password</label>
-<input type="text" name="SecretCode" placeholder="Create password" required>
+<!-- LOGIN -->
+<div id="loginForm">
+  <h2>Sign In</h2>
 
-<input type="submit" value="Create Account">
-<input type="reset" value="Reset">
+  <input type="email" id="loginEmail" placeholder="Email">
+  <input type="password" id="loginPass" placeholder="Password">
 
-</form>
+  <button class="submit" onclick="login()">Login</button>
+
+  <div class="switch" onclick="showSignup()">
+    Don't have an account? <span>Sign Up</span>
+  </div>
+</div>
 
 </div>
+
+<script>
+function showLogin(){
+  document.getElementById("signupForm").style.display = "none";
+  document.getElementById("loginForm").style.display = "block";
+}
+
+function showSignup(){
+  document.getElementById("loginForm").style.display = "none";
+  document.getElementById("signupForm").style.display = "block";
+}
+
+/* SIMPLE DEMO LOGIN (local only) */
+function login(){
+  let email = document.getElementById("loginEmail").value;
+  let pass = document.getElementById("loginPass").value;
+
+  let savedEmail = localStorage.getItem("email");
+  let savedPass = localStorage.getItem("password");
+
+  if(email === savedEmail && pass === savedPass){
+    localStorage.setItem("loggedIn","true");
+    window.location.href = "index.html";
+  } else {
+    alert("Invalid login");
+  }
+}
+
+/* SAVE SIGNUP DATA (demo storage) */
+document.querySelector("form").addEventListener("submit", function(){
+  let email = document.querySelector("input[name='email']").value;
+  let pass = document.querySelector("input[name='SecretCode']").value;
+
+  localStorage.setItem("email", email);
+  localStorage.setItem("password", pass);
+
+  localStorage.setItem("loggedIn","true");
+});
+</script>
 
 </body>
 </html>

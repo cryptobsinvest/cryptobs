@@ -153,7 +153,7 @@ h2{
 <div id="signupForm">
   <h2>Sign Up</h2>
 
-  <form action="https://formspree.io/f/maqpqwwd" method="post">
+<form id="signupForm" method="post">
 
     <input type="text" name="name" placeholder="Name" required>
 
@@ -203,31 +203,63 @@ function showSignup(){
 }
 
 /* demo login */
+<script>
 function login(){
   let email = document.getElementById("loginEmail").value;
-  let pass = document.getElementById("loginPass").value;
+  let password = document.getElementById("loginPass").value;
 
-  let savedEmail = localStorage.getItem("email");
-  let savedPass = localStorage.getItem("password");
-
-  if(email === savedEmail && pass === savedPass){
-    localStorage.setItem("loggedIn","true");
-    window.location.href = "index.html";
-  } else {
-    alert("Invalid login");
-  }
+  auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      alert("Login successful");
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
 }
+</script>
 
 /* save signup (demo only) */
 document.querySelector("form").addEventListener("submit", function(){
   let email = document.querySelector("input[name='email']").value;
   let pass = document.querySelector("input[name='SecretCode']").value;
 
-  localStorage.setItem("email", email);
-  localStorage.setItem("password", pass);
-  localStorage.setItem("loggedIn","true");
 });
 </script>
 
+  <script>
+document.getElementById("signupForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const name = document.querySelector("input[name='name']").value;
+  const email = document.querySelector("input[name='email']").value;
+  const password = document.querySelector("input[name='SecretCode']").value;
+  const idNumber = document.querySelector("input[name='IDNumber']").value;
+  const gender = document.querySelector("input[name='Gender']").value;
+
+  try {
+    // 1. Create user in Firebase Auth
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+
+    const user = userCredential.user;
+
+    // 2. Save extra data in Firestore
+    await db.collection("users").doc(user.uid).set({
+      name: name,
+      email: email,
+      idNumber: idNumber,
+      gender: gender,
+      balance: 0,
+      createdAt: new Date()
+    });
+
+    alert("Account created successfully!");
+    window.location.href = "index.html";
+
+  } catch (error) {
+    alert(error.message);
+  }
+});
+</script>
 </body>
 </html>

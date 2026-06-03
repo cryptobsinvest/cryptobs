@@ -1,3 +1,4 @@
+```html id="auth_full"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +17,12 @@ body{
   color:white;
 }
 
-/* TOP MENU (your old buttons style but modern) */
+/* MENU */
 .menu{
   display:flex;
   justify-content:left;
-  flex-wrap:wrap;
-  gap:3px;
   background:linear-gradient(90deg,#1b1b1b,#2c2c2c);
   padding:12px;
-  position:sticky;
-  top:0;
-  z-index:1000;
 }
 
 .menu a{
@@ -35,10 +31,9 @@ body{
   background:#333;
   padding:10px 14px;
   border-radius:10px;
-  font-size:14px;
 }
 
-/* CARD */
+/* CONTAINER */
 .container{
   max-width:420px;
   margin:40px auto;
@@ -88,19 +83,12 @@ input[type=submit], button{
   cursor:pointer;
 }
 
-
-.back-btn{
-  margin-right:auto;
-  font-weight:bold;
-}
-
 .switch span{
   color:#00c896;
   font-weight:bold;
 }
 
-/* LOGIN HIDE */
-#loginForm{
+#loginBox{
   display:none;
 }
 
@@ -109,74 +97,61 @@ h2{
 }
 </style>
 
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDFSkiBUVWpJ9e9TBE29Gavk3NDRtmkUzY",
+  authDomain: "cryptobs-8e15e.firebaseapp.com",
+  projectId: "cryptobs-8e15e",
+  storageBucket: "cryptobs-8e15e.firebasestorage.app",
+  messagingSenderId: "474911233267",
+  appId: "1:474911233267:web:27f8c32c5fe2191498d386"
+};
 
-  <script>
-  // 🔴 REPLACE THIS WITH YOUR FIREBASE CONFIG
-  const firebaseConfig = {
-    apiKey: "AIzaSyDFSkiBUVWpJ9e9TBE29Gavk3NDRtmkUzY",
-    authDomain: "cryptobs-8e15e.firebaseapp.com",
-    projectId: "cryptobs-8e15e",
-    storageBucket: "cryptobs-8e15e.firebasestorage.app",
-    messagingSenderId: "474911233267",
-    appId: "1:474911233267:web:27f8c32c5fe2191498d386"
-  };
+firebase.initializeApp(firebaseConfig);
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // Services
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-
-  console.log("Firebase connected successfully");
+const auth = firebase.auth();
+const db = firebase.firestore();
 </script>
 
-  
 </head>
 
 <body>
 
-<!-- MENU (RESTORED OLD BUTTONS) -->
 <div class="menu">
- <a href="index.html" class="back-btn">←</a> 
-
+  <a href="index.html">← Back</a>
 </div>
 
-<!-- MAIN BOX -->
 <div class="container">
 
 <!-- SIGN UP -->
-<div id="signupForm">
+<div id="signupBox">
   <h2>Sign Up</h2>
 
-<form id="signupForm" method="post">
+  <form id="signupForm">
 
     <input type="text" name="name" placeholder="Name" required>
-
     <input type="email" name="email" placeholder="Email" required>
-
     <input type="text" name="IDNumber" placeholder="ID / Passport" required>
-
     <input type="text" name="Gender" placeholder="Gender" required>
-
-    <input type="text" name="SecretCode" placeholder="Password" required>
+    <input type="password" name="SecretCode" placeholder="Password" required>
 
     <input type="submit" class="submit" value="Create Account">
-    <input type="reset" class="reset" value="Reset">
+    <input type="reset" class="reset">
 
   </form>
 
   <div class="switch" onclick="showLogin()">
-    Already have an account? <span>Sign In</span>
+    Already have account? <span>Sign In</span>
   </div>
 </div>
 
 <!-- LOGIN -->
-<div id="loginForm">
+<div id="loginBox">
   <h2>Sign In</h2>
 
   <input type="email" id="loginEmail" placeholder="Email">
@@ -185,50 +160,27 @@ h2{
   <button class="submit" onclick="login()">Login</button>
 
   <div class="switch" onclick="showSignup()">
-    Don't have an account? <span>Sign Up</span>
+    Don't have account? <span>Sign Up</span>
   </div>
 </div>
 
 </div>
 
 <script>
+
+/* SWITCH UI */
 function showLogin(){
-  document.getElementById("signupForm").style.display = "none";
-  document.getElementById("loginForm").style.display = "block";
+  document.getElementById("signupBox").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
 }
 
 function showSignup(){
-  document.getElementById("loginForm").style.display = "none";
-  document.getElementById("signupForm").style.display = "block";
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("signupBox").style.display = "block";
 }
 
-/* demo login */
-<script>
-function login(){
-  let email = document.getElementById("loginEmail").value;
-  let password = document.getElementById("loginPass").value;
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      alert("Login successful");
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-}
-</script>
-
-/* save signup (demo only) */
-document.querySelector("form").addEventListener("submit", function(){
-  let email = document.querySelector("input[name='email']").value;
-  let pass = document.querySelector("input[name='SecretCode']").value;
-
-});
-</script>
-
-  <script>
-document.getElementById("signupForm").addEventListener("submit", async function(e){
+/* SIGN UP */
+document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = document.querySelector("input[name='name']").value;
@@ -238,17 +190,14 @@ document.getElementById("signupForm").addEventListener("submit", async function(
   const gender = document.querySelector("input[name='Gender']").value;
 
   try {
-    // 1. Create user in Firebase Auth
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-
     const user = userCredential.user;
 
-    // 2. Save extra data in Firestore
     await db.collection("users").doc(user.uid).set({
-      name: name,
-      email: email,
-      idNumber: idNumber,
-      gender: gender,
+      name,
+      email,
+      idNumber,
+      gender,
       balance: 0,
       createdAt: new Date()
     });
@@ -256,10 +205,27 @@ document.getElementById("signupForm").addEventListener("submit", async function(
     alert("Account created successfully!");
     window.location.href = "index.html";
 
-  } catch (error) {
-    alert(error.message);
+  } catch (err) {
+    alert(err.message);
   }
 });
+
+/* LOGIN */
+function login(){
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPass").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("Login successful");
+      window.location.href = "index.html";
+    })
+    .catch((err) => {
+      alert(err.message);
+    });
+}
 </script>
+
 </body>
 </html>
+```

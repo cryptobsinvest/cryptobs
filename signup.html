@@ -19,7 +19,7 @@ body{
 /* TOP MENU (your old buttons style but modern) */
 .menu{
   display:flex;
-  justify-content:center;
+  justify-content:left;
   flex-wrap:wrap;
   gap:3px;
   background:linear-gradient(90deg,#1b1b1b,#2c2c2c);
@@ -88,6 +88,12 @@ input[type=submit], button{
   cursor:pointer;
 }
 
+
+.back-btn{
+  margin-right:auto;
+  font-weight:bold;
+}
+
 .switch span{
   color:#00c896;
   font-weight:bold;
@@ -108,7 +114,7 @@ h2{
 
 <!-- MENU (RESTORED OLD BUTTONS) -->
 <div class="menu">
-  <a href="index.html">Home</a>
+ <a href="index.html" class="back-btn">←</a> 
 
 </div>
 

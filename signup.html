@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +17,12 @@ body{
   color:white;
 }
 
-/* TOP MENU (your old buttons style but modern) */
+/* MENU */
 .menu{
   display:flex;
   justify-content:left;
-  flex-wrap:wrap;
-  gap:3px;
   background:linear-gradient(90deg,#1b1b1b,#2c2c2c);
   padding:12px;
-  position:sticky;
-  top:0;
-  z-index:1000;
 }
 
 .menu a{
@@ -35,10 +31,9 @@ body{
   background:#333;
   padding:10px 14px;
   border-radius:10px;
-  font-size:14px;
 }
 
-/* CARD */
+/* CONTAINER */
 .container{
   max-width:420px;
   margin:40px auto;
@@ -88,18 +83,11 @@ input[type=submit], button{
   cursor:pointer;
 }
 
-
-.back-btn{
-  margin-right:auto;
-  font-weight:bold;
-}
-
 .switch span{
   color:#00c896;
   font-weight:bold;
 }
 
-/* LOGIN HIDE */
 #loginForm{
   display:none;
 }
@@ -109,69 +97,56 @@ h2{
 }
 </style>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDFSkiBUVWjP9e9TBE29Gavk3NDRtmkUzY",
+  authDomain: "cryptobs-8e15e.firebaseapp.com",
+  projectId: "cryptobs-8e15e",
+  storageBucket: "cryptobs-8e15e.firebasestorage.app",
+  messagingSenderId: "474911233267",
+  appId: "1:474911233267:web:27f8c32c5fe2191498d386"
+};
 
-  <script>
-  // 🔴 REPLACE THIS WITH YOUR FIREBASE CONFIG
-  const firebaseConfig = {
-    apiKey: "AIzaSyDFSkiBUVWpJ9e9TBE29Gavk3NDRtmkUzY",
-    authDomain: "cryptobs-8e15e.firebaseapp.com",
-    projectId: "cryptobs-8e15e",
-    storageBucket: "cryptobs-8e15e.firebasestorage.app",
-    messagingSenderId: "474911233267",
-    appId: "1:474911233267:web:27f8c32c5fe2191498d386"
-  };
+firebase.initializeApp(firebaseConfig);
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // Services
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-
-  console.log("Firebase connected successfully");
+const auth = firebase.auth();
+const db = firebase.firestore();
 </script>
 
-  
 </head>
 
 <body>
 
-<!-- MENU (RESTORED OLD BUTTONS) -->
 <div class="menu">
- <a href="index.html" class="back-btn">←</a> 
-
+  <a href="index.html">← Back</a>
 </div>
 
-<!-- MAIN BOX -->
 <div class="container">
 
-<!-- SIGN UP -->
-<div id="signupForm">
+<!-- SIGNUP -->
+<div id="signupFormBox">
   <h2>Sign Up</h2>
 
-  <form action="https://formspree.io/f/maqpqwwd" method="post">
+  <form id="signupForm">
 
     <input type="text" name="name" placeholder="Name" required>
-
     <input type="email" name="email" placeholder="Email" required>
-
     <input type="text" name="IDNumber" placeholder="ID / Passport" required>
-
     <input type="text" name="Gender" placeholder="Gender" required>
-
     <input type="text" name="SecretCode" placeholder="Password" required>
 
     <input type="submit" class="submit" value="Create Account">
-    <input type="reset" class="reset" value="Reset">
+    <input type="reset" class="reset">
 
   </form>
 
   <div class="switch" onclick="showLogin()">
-    Already have an account? <span>Sign In</span>
+    Already have account? <span>Sign In</span>
   </div>
 </div>
 
@@ -185,49 +160,69 @@ h2{
   <button class="submit" onclick="login()">Login</button>
 
   <div class="switch" onclick="showSignup()">
-    Don't have an account? <span>Sign Up</span>
+    Don't have account? <span>Sign Up</span>
   </div>
 </div>
 
 </div>
 
 <script>
+// toggle UI
 function showLogin(){
-  document.getElementById("signupForm").style.display = "none";
+  document.getElementById("signupFormBox").style.display = "none";
   document.getElementById("loginForm").style.display = "block";
 }
 
 function showSignup(){
   document.getElementById("loginForm").style.display = "none";
-  document.getElementById("signupForm").style.display = "block";
+  document.getElementById("signupFormBox").style.display = "block";
 }
 
-/* demo login */
-function login(){
-  let email = document.getElementById("loginEmail").value;
-  let pass = document.getElementById("loginPass").value;
+// SIGN UP
+document.getElementById("signupForm").addEventListener("submit", async function(e){
+  e.preventDefault();
 
-  let savedEmail = localStorage.getItem("email");
-  let savedPass = localStorage.getItem("password");
+  const name = this.name.value;
+  const email = this.email.value;
+  const password = this.SecretCode.value;
+  const idNumber = this.IDNumber.value;
+  const gender = this.Gender.value;
 
-  if(email === savedEmail && pass === savedPass){
-    localStorage.setItem("loggedIn","true");
+  try {
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+
+    await db.collection("users").doc(user.uid).set({
+      name,
+      email,
+      idNumber,
+      gender,
+      balance: 0,
+      createdAt: new Date()
+    });
+
+    alert("Account created!");
     window.location.href = "index.html";
-  } else {
-    alert("Invalid login");
+
+  } catch (err) {
+    alert(err.message);
   }
-}
-
-/* save signup (demo only) */
-document.querySelector("form").addEventListener("submit", function(){
-  let email = document.querySelector("input[name='email']").value;
-  let pass = document.querySelector("input[name='SecretCode']").value;
-
-  localStorage.setItem("email", email);
-  localStorage.setItem("password", pass);
-  localStorage.setItem("loggedIn","true");
 });
+
+// LOGIN
+function login(){
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPass").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("Login successful");
+      window.location.href = "index.html";
+    })
+    .catch(err => alert(err.message));
+}
 </script>
 
 </body>
 </html>
+```

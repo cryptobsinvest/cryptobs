@@ -1,72 +1,168 @@
-
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="icon-192.png">
+
+<title>Cryptobs Signal</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Cryptobs Add the code</title>
+
+<meta name="theme-color" content="#0f1115">
+
 <style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0f1115;
+    color:white;
+}
 
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    flex-wrap:wrap;
+    background:linear-gradient(90deg,#1b1b1b,#2c2c2c);
+    padding:12px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-.add{
+.navbar a{
+    text-decoration:none;
+    color:white;
+    background:#333;
+    padding:10px 14px;
+    border-radius:10px;
+    font-size:14px;
+    transition:0.3s;
+}
 
-  text-decoration:none;
-  color:black;
-  background:#b8b8b8;
-  padding:15px 5px;
-  border:1px solid #b9b9b9;
-  border-radius:7px;
-  align-content: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-  }
-  
-  
+.navbar a:active{
+    transform:scale(0.95);
+}
+
+/* CARD */
+.card{
+    margin:20px;
+    background:#1c1f26;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+.card h2{
+    text-align:center;
+    margin-top:0;
+}
+
+.card p{
+    text-align:center;
+}
+
+/* INPUTS */
+label{
+    display:block;
+    margin-top:12px;
+    margin-bottom:6px;
+}
+
+input[type="text"]{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+/* BUTTONS */
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.buttons input{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+input[type="reset"]{
+    background:#666;
+    color:white;
+}
+
+input[type="submit"]{
+    background:#00c896;
+    color:black;
+}
 </style>
 </head>
+
 <body>
-<!-- ----------------------------------------------------------- -->
 
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="signup.html">Signup</a>
+    <a href="ballance.html">Balance</a>
+    <a href="deposit.html">Deposit</a>
+</div>
 
-<!-- ------------------------------------------------- -->
-  <div style="height:120px; width:100%; background:#b9b9b9; margin-left: 0px; margin-right:0px;
-  text-decoration:none; display:flex; align-items:center; justify-content:center;">
-  <table align="center">
- 
-      <tr>
-        <td>
-  <a href="index.html" class="add"> Home </a>   </td> <td>   <a href="signup.html" class="add"> Sign-Up </a> 
-  </td> <td>  <a href="ballance.html" class="add">Balance/Withdraw </a> 
-  </td><td>  <a href="deposit.html"  class="add"> Deposit </a>  </td>
-      </tr>
-    
-  
-    </table>
-  </div>
-<hr/>
+<!-- SIGNAL FORM -->
+<div class="card">
 
-<table align="center" >
-<td>
-<p align="center"> Add the code that you get from Telegram/email </p>
-<form action="https://formspree.io/f/xnjgjadd" method="post"  autocomplete="on">
+    <h2>Add Signal Code</h2>
 
-<label for="SecretCode">Your Password: </label> <br>
-<input type="text" name="SecretCode" placeholder="your Password" id="SecretCode" required /> 
-<br />
-<br>
-<label for="code"> Code from telegram or email: </label> <br>
-<input type="text" name="tel/emailCode" id="tel/emailCode" placeholder="btc/gold - xdym-3 m" required /> 
-<br />
-<br>
+    <p>
+        Enter the code received from Telegram or Email.
+    </p>
 
-<input type="reset" value="reset" />
-<input type="submit" value="submit" />
-</form>
-</td>
-</table>
+    <form action="https://formspree.io/f/xnjgjadd" method="post" autocomplete="on">
 
+        <label for="SecretCode">
+            Your Password
+        </label>
+
+        <input
+            type="text"
+            name="SecretCode"
+            id="SecretCode"
+            placeholder="Your Password"
+            required>
+
+        <label for="signalCode">
+            Code from Telegram or Email
+        </label>
+
+        <input
+            type="text"
+            name="tel_emailCode"
+            id="signalCode"
+            placeholder="btc/gold - xdym-3m"
+            required>
+
+        <div class="buttons">
+            <input type="reset" value="Reset">
+            <input type="submit" value="Submit">
+        </div>
+
+    </form>
+
+</div>
 
 </body>
 </html>
+```

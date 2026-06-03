@@ -108,6 +108,34 @@ h2{
   text-align:center;
 }
 </style>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+
+  <script>
+  // 🔴 REPLACE THIS WITH YOUR FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "AIzaSyDFSkiBUVWpJ9e9TBE29Gavk3NDRtmkUzY",
+    authDomain: "cryptobs-8e15e.firebaseapp.com",
+    projectId: "cryptobs-8e15e",
+    storageBucket: "cryptobs-8e15e.firebasestorage.app",
+    messagingSenderId: "474911233267",
+    appId: "1:474911233267:web:27f8c32c5fe2191498d386"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Services
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  console.log("Firebase connected successfully");
+</script>
+
+  
 </head>
 
 <body>

@@ -1,55 +1,68 @@
-const CACHE = "cryptobs-pwa-v6"; // <-- bump this every time you update
+const CACHE = "cryptobs-static-v1";
 
-const ASSETS = [
-  "/cryptobs/",
-  "/cryptobs/index.html",
-  "/cryptobs/manifest.json",
+// Only cache static assets (NO HTML pages, NO data, NO API)
+const STATIC_ASSETS = [
   "/cryptobs/icon-192.png",
   "/cryptobs/icon-512.png",
-  "/cryptobs/sw.js"
+  "/cryptobs/manifest.json"
 ];
 
+// Install: cache only static assets
 self.addEventListener("install", (event) => {
   self.skipWaiting();
+
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE).then((cache) => {
+      return cache.addAll(STATIC_ASSETS);
+    })
   );
 });
 
+// Activate: clean old caches
 self.addEventListener("activate", (event) => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)));
-    await self.clients.claim();
-  })());
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+
+      await Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE) {
+            return caches.delete(key);
+          }
+        })
+      );
+
+      await self.clients.claim();
+    })()
+  );
 });
 
-// Network-first for HTML (so updates appear), cache-first for others
+// Fetch: NEVER cache HTML or Firebase/API data
 self.addEventListener("fetch", (event) => {
   const req = event.request;
-
-  // Only handle same-origin requests
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
 
-  // If it's navigation / HTML, try network first
-  if (req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html")) {
-    event.respondWith((async () => {
-      try {
-        const fresh = await fetch(req);
-        const cache = await caches.open(CACHE);
-        cache.put(req, fresh.clone());
-        return fresh;
-      } catch (e) {
-        const cached = await caches.match(req);
-        return cached || caches.match("/cryptobs/index.html");
-      }
-    })());
+  // Always bypass cache for:
+  // - HTML pages
+  // - Firebase
+  // - API requests
+  // - navigation
+  if (
+    req.mode === "navigate" ||
+    req.headers.get("accept")?.includes("text/html") ||
+    url.hostname.includes("firebase") ||
+    url.hostname.includes("googleapis") ||
+    url.pathname.includes("/api") ||
+    req.method !== "GET"
+  ) {
+    event.respondWith(fetch(req));
     return;
   }
 
-  // For other files, cache-first
+  // Cache-first ONLY for static assets
   event.respondWith(
-    caches.match(req).then((cached) => cached || fetch(req))
+    caches.match(req).then((cached) => {
+      return cached || fetch(req);
+    })
   );
 });

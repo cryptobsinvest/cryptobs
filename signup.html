@@ -218,7 +218,9 @@ function login(){
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
       alert("Login successful");
-      window.location.href = "index.html";
+
+      // redirect to balance page
+      window.location.href = "ballance.html";
     })
     .catch((err) => {
       alert(err.message);
